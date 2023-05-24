@@ -21,6 +21,7 @@ class ModelFile {
             const notas = JSON.parse(await this.leerArchivo());
             return notas;
         } catch {
+            console.log("No se pudo leer el archivo");
             return [];
         }
     };
@@ -29,11 +30,18 @@ class ModelFile {
         let notas = [];
         try {
             notas = JSON.parse(await this.leerArchivo());
-        } catch {}
+        } catch {
+            console.log("No se pudo leer el archivo");
+        }
 
         notas.push(nota);
 
-        await this.escribirArchivo(notas);
+        try {
+            await this.escribirArchivo(notas);
+        } catch {
+            console.log("No se pudo escribir el archivo");
+        }
+
         return nota;
     };
 }
